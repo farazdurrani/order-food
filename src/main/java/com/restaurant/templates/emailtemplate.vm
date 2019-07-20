@@ -1,0 +1,11 @@
+Dear ${fullname}
+ 
+You have successfully placed an order for the following dishes: 
+
+#foreach($menu in $menus)
+         $menu.name  
+#end 
+ 
+Sending Email Using Spring Email + Velocity Template.
+ 
+Thanks

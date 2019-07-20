@@ -1,0 +1,248 @@
+!~!~!~! FUTURE IDEA !~!~!~!
+
+* Put a cart sign and button that shows how many orders a person has placed in current session. (AFTER DEPLOYMENT ON OPENSHIFT) (DONE!)
+
+* In that cart, have a kill session button? (AFTER DEPLOYMENT ON OPENSHIFT) (DONE!)
+
+* Maybe show menu for a whole year? instead of a week? Discuss it with Zubair bhai/Yusuf bhai
+
+* Must have Sign up username duplication check! MUST MUST MUST! Zubair bhai will do it insha'Allah (bean validation, Validator interface etc)
+
+* Find more pictures and menu names and prices and insert them. Zubair bhai will do it insha'Allah (html, javascript)
+
+* Implement HTTPS? Yusuf bhai will defitely ask about it
+
+* SEND EMAIL! (DONE!) Further improvements need to implemented inshaAllah Zubair bhai will do them. 
+
+* TEST SIGN IN! (DONE!)
+
+* Will definitely need to make another Menu(ForShow?) class and table to load only the menus for Days. (DONE!)
+
+* instead of saving the last order after clicking signup from ordersubmitted page, save all the orders (thru sessionID?) (DONE!)
+
+!~!~!~! TODO LIST !~!~!~! (none of them are priority)
+
+* Take a look at removeSingleOrder method inside repository. No need for SQL anymore. write HQL. Then Maybe change the tables
+and run without single order. 
+
+* Improve those big methods like "menuService.IsThisPersonTryingToCheckForTodaysMenuAndHeHasAlreadyOrderedForToday(...)."
+Those methods (4 in total) can be written differently. This item is not a priority though. Even if you don't change, that's fine.
+
+* Add dates as string when you go to menu.jsp (those that you see on the right side under view other days menus) (DONE)
+
+* Also add date strings to history List under /youraccount method
+
+* Will probably need to take off that little calendar on which you wasted several hours? Or maybe keep its files and code for something futuristic? 
+
+
+============================================================================================================================
+
+Till and In V3, login, signup, signin, not signing up, showing menus, everything is working. 
+One hibernate stuff is also in there. In V3, using MenuForShow to show menus. Actually it just
+replaced database list in defaultorderrepository.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Till and In V4, little things on front end are fixed. Like can't sign up without selecting dishes. Also, MenuForShow class
+is also replaced by orignal Menu class. Which is how it should have been. 
+
+----------------------------------------------------------------------------------------------------------------------------
+
+IN V5, I am trying to fix Orders without sign-ups.  Till V4, orders without sign up are working fine on one computer. 
+If another person with the same "NAME" places an order for the same day, it appears as if this person with name "NAME"
+has ordered twice the quantity. That's not good. Trying to change the lookup method. Instead of looking up by name, 
+let me try to look up with ID. 
+
+The above problem is solved. But now it has lead us to another problem. This problem was not there before. 
+But it wasn't the right way. So lets try to solve this new problem. maybe httpsession is the answer?
+
+New problem is solved as well. httpsession was indeed the answer. HttpSession.getId() to be precise. 
+But this has led to another small problem. When a user places an order for say Monday, the order confirmation page shows the correct
+name. Now lets say a user places an order for Tuesday, the order confirmation page will again show the correct
+name. But now if I go back to see Monday menus, the name is wrong. It shows the name of the second person! Should be showing
+the first person's name. Dont know how am I gonna do that!
+
+AlHamdulillah, that problem is solved too!. Made a new method and called it from Restaurant2Controller like this:
+this.menuService.getNameForThatDaysOrder( this.today() (day if called from menu/day), order.getId() ). This would return the correct name for a day.
+Inside menualreadyordered.jsp page, I have this: 
+	<c:if test="${not empty name}">
+	<Legend>Thank you ${name}</Legend>
+	</c:if>
+	<c:if test="${empty name}">
+	<Legend>Thank you ${order.user.name}</Legend>
+	</c:if>
+I have this check so that if a person actually logs in, He will be able to see his name from his account.
+
+In V5 Everything is working as intended. 
+
+----------------------------------------------------------------------------------------------------------------------------
+
+IN V6 NOW:
+
+Here I am trying to detach single orders from Order class and make a new class called SingleOrder.
+Successfully done that. Everything is working as before. 
+
+Also maybe remove the 'kill-session-thing' after a person hits 'sign up' or 'sign in' page.
+
+kill session thing is fixed. Also one little problem is fixed as well. 
+
+Moving on to V7 to persist data. 
+
+----------------------------------------------------------------------------------------------------------------------------
+
+IN V7 NOW:
+
+Persisted single orders as well! Fixed small problems like when loading all the menus, it would extract all the menus
+even the ordered ones. That would show the XXX day's menu twice. Not cool. Fixed it by new SQL query 
+(SELECT * from  restaurant.menus WHERE single_order_id is null and order_id is null;). 
+
+Need to implement SINGLE ORDER REMOVE method (remove it from DB). But I am thinking to implement it after finishing with 
+whole Order persistence thing. And then once a person finishes the sign up page from ordersubmitted.jsp page, extract everything
+from database using session ID and shove it all in inside Order persistence. Just an idea.  
+
+Improved session ID thing. Removed it from every method paramenter and made it global. 
+
+Tomorrow, need to fix every single method which deals with SingleOrders.
+
+Fail! Spent 4-5 hours on this little issue. Found the solution after 4-5 hours. Do this:
+In your SingleOrder class, make another id variable and give it @Id and autogenerated. Change tables accordingly.
+Make single_order_id INDEXED (Key). Lets try this tomorrow! 
+
+Removed ids from constructors. Try again with previous codes
+
+SUCCESS! After 18 hours? This issue is resolved. It could be written in a bit better way. But after spending
+18 hours on it, who cares to make it better.  The "HALL OF FAME" code has been preserved at the bottom. 
+
+Going to V8 now to start working on saving users.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+IN V8: 
+
+Till V7, I am done with 2 lists. 1) Loading up and showing menu to the customer. 2) Saving and retrieving Single Order Information.
+
+In V8, I have made some radical changes. There is no more User persisted. User has been converted to Customer.java and it contains List<Menus>
+Before, it didn't make sense how to persist Order with User and List<Menu> in a database.
+Now, Customer (user) is persisted properly with menus (this way List<User> has been taken care of). Slowly, I will get rid of Order.java
+
+There is a new SQL as well to reflect the changes in tables. 
+
+IN V8_a:
+
+OVERHAULING THE ENTIRE CODE! CHANGING FROM ORDER TO CUSTOMER
+then we will be able to save full orders.
+
+Overhauling is complete! Any little bug that is yet to be found can be found and fixed later. Still need to save full Order.
+
+
+IN V8_b:
+
+Fixed whole order thing. Whole customer is saved with menus, that's old order. 
+Made seperate MenuForShow so that adding or deleting menus doesn't mess up menus to show. restaurant.sql reflects the changes made.
+Everything works so far it seems. 
+
+IN V8_c:
+
+Single orders are now persisted systematically instead of that 'hall of fame' code. It works fine as of now. Didn't test it thorougly.
+I did that to facilitate saving all the orders in a session once someone decides to signup. 
+retaurant.sql has changed. New SQL has been added. 
+
+If a person completes his signup proces during placing an order, that works completely fine now. All the orders in the session
+gets saved instead of the last order, which was the case before. 
+When on /youraccount viewing future/past orders, clicking on them opens a new tab now. 
+
+Moving to v9 and implementing Admin/Owner stuff!!!!!!
+
+----------------------------------------------------------------------------------------------------------------------------
+
+IN V9:
+
+Admin task are complete! You can view all the open orders either it be Customer or SingleOrder. An admin also has the power
+to complete the order.
+Closed orders (either by customer or singleorder) are also shownn. 
+
+STILL NEED TO TEST SIGN IN PROCESS!!!!!!!!!!!!
+
+IN V9_a:
+
+DONE! SIGN in Process is complete. Encountered some small problems but now they are fixed. All good now.
+
+I found some extra fields in table 'menus'. Removed single_order_id from it. Tested it somewhat but not thoroughly. 
+I think its fine without it. If problems occur, we can replace it. We have both copies in this project. 
+
+Moving to V9_b to put mail thing in order...
+
+IN V9_b:
+
+Mail thing is working. It's not sending mail to everyone but main thing is implemented and as of now only the customer 
+
+recieves emails. Zubair bhai will further improve it inshaALLAH.
+
+Moving to V9_c:
+
+In V9_c:
+
+Removed database arraylist in DefaultMenuService which was saving all the menus for show.  Removed couple of converters
+associated with it. 
+
+And uploaded the project to openshift!
+
+---------------------------------------------------------------------------------------------------------------------------
+
+In V9_d:
+
+Cleaned up all the files that were not in used. 
+
+Trying to implements dates!
+
+ok so far, Menu.java has successfully implemented Dates and they are showing just fine when viewed thru menu.jsp (both today's and other days)
+
+Now, time to check/change checkingmenusfortodayandifhehasordered*** methods. 
+
+will do that in V9_e.
+
+IN V9_e:
+
+For methods that check for already-submitted-orders like "menuService.IsThisPersonTryingToCheckForTodaysMenuAndHeHasAlreadyOrderedForToday(
+						customer.getUserid())
+or "menuService.isThisPersonTryingToCheckTheMenuForTodayAndHeHasAlreadyOrdered_HeIsNotLoggedIn(this.sessionID())", etc to work, you need to send whole
+Customer Object (so that it can check the dates from customer.menu.orderdate, and it will need userid (email address) to pull out all the records
+of that userid. Also, need to add date column inside menus table. That sql change has been saved in this project with name "restaurant_with_orderdates.sql". 
+
+Added dateOrdered column inside menus table. Made neccassary changes to dateOrdered field inside Menu.java. Now the remaining testing part is running those 
+long methods such as "menuService.isThisPersonTryingToCheckTheMenuForTodayAndHeHasAlreadyOrdered_HeIsNotLoggedIn(this.sessionID()) ."
+
+Made changes inside "menuService.IsThisPersonTryingToCheckForTodaysMenuAndHeHasAlreadyOrderedForToday(customer.getUserid())" method. But I didn't send in the whole
+Customer object. Instead, userID was enough in this case because userID will be unique (which Zubair bhai will implement inshaAllah).
+Nevertheless, that method "menuService.IsThisPersonTryingToCheckForTodaysMenuAndHeHasAlreadyOrderedForToday(customer.getUserid())" works perfectly fine as of now. 
+Still need to check other 3? methods. 
+
+menuService.IsThisPersonTryingToCheckForTodaysMenuAndHeHasAlreadyOrderedForToday(customer.getUserid())
+menuService.isThisPersonTryingToCheckTheMenuForTodayAndHeHasAlreadyOrdered_HeIsNotLoggedIn(this.sessionID()) has been updated and works fine as of now.
+menuService.isThisPersonTryingToCheckTheMenuForWhichHeHasAlreadyOrdered(day, customer.getUserid()) has been updated and works fine as of now.
+menuService.isThisPersonTryingToCheckTheMenuForWhichHeHasAlreadyOrdered_HeIsNotLoggedIn(day, this.sessionID()) has been updated and works fine as of now.
+
+All 4 methods done above!
+
+Now moving on to V9_f. Need to pull the records from database using userID and DATES instead of just userID. I have a hunch that's a better way, but need 
+to be absolutely sure why go that way. Otherwise, just leave them. 
+
+In V9_f:
+
+all the methods that pull records has been updated to deal with dates. Made copies of methods and made one copy to deal with todays menus and other copy to deal
+with other day menus. 
+
+methods in /menu/{day} that pull records from DB to display are also updated.
+
+ordersubmitted.jsp and menualreadyordered.jsp also show dates now. 
+
+moving to V9_g to fix admin panel.
+
+In V9_g:
+
+Admin page also shows the dates now. We can do a lot of fancy stuff there but for now its fine. Maybe leave it for Zubair bhai.
+
+Added the cart with number of orders button + kill the session button!
+
+Moving to V10 to clean stuff up and upload!
+

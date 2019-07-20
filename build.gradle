@@ -1,0 +1,29 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.restaurant'
+version = '0.0.1-RELEASE'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'mysql:mysql-connector-java'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile group: 'org.apache.commons', name: 'commons-dbcp2'
+	compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+	compile group: 'org.springframework', name: 'spring-context-support'
+	compile group: 'org.springframework', name: 'spring-orm', version: '4.0.3.RELEASE'
+	compile group: 'org.springframework', name: 'spring-support', version: '2.0.6'
+	compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.3.6.Final'
+	
+	
+}
