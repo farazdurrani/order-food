@@ -14,9 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 
@@ -83,7 +80,6 @@ public class Menu implements Serializable
 	 */
 	public Menu(String name) {
 		String tokens[] = name.split("=");
-		System.err.println("inside Menu(String name) ");
 		for(int i = 0; i < tokens.length; i++){
 			tokens[i] = tokens[i].trim();
 		}

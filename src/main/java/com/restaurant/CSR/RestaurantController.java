@@ -41,10 +41,7 @@ import com.restaurant.sendemail.SendMail;
 
 @WebController
 @SessionAttributes("customer")
-public class RestaurantController3 {
-
-
-
+public class RestaurantController {
 
 	//JUST TO HANDLE SINGLE ORDERS (ORDERS WITHOUT SIGNING UP). session ID is one way!
 	private long sessionID(){
@@ -57,15 +54,16 @@ public class RestaurantController3 {
 		return sessID;
 	}
 	@Autowired
-	MenuService menuService;
+	private MenuService menuService;
 
 	@Autowired
-	SendMail sm;
+	private SendMail sm;
 
 	@ModelAttribute
 	public Customer customerModal() {
 		return new Customer();
 	}
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Menu.class, new MenuTypeEditor());
@@ -80,7 +78,6 @@ public class RestaurantController3 {
 	@RequestMapping(value = { "", "list", "main", " " }, method = RequestMethod.GET)
 	public String listMenus(Map<String, Object> model) {
 		this.menuService.getAllMenusForShow();
-		System.err.println(this.sessionID());
 		return "/list";
 	}
 
@@ -153,8 +150,6 @@ public class RestaurantController3 {
 					// made a customer for
 					// today
 
-					System.err.println("Is this the same single customer ID " + customer.getId());
-
 					List<Menu> thisDaysMenus = this.menuService.getMenuOfThisPersonWhoIsNotLoggedInFromToday(this.sessionID());
 					model.addAttribute("today", thisDaysMenus);
 					model.addAttribute("other", this.notTodaysDayName());
@@ -187,7 +182,6 @@ public class RestaurantController3 {
 	@RequestMapping(value = "/menu/{day}", method = RequestMethod.GET)
 	public String otherDaysMenuPage(@PathVariable String day, @ModelAttribute(value = "customer") Customer customer,
 			Model model) {		
-		System.err.println("inside /menu/{day}, Customer is " + customer);
 		if (customer != null && customer.getFullname() != null) { // Is there a user? if yes then proceed.
 			// It also means that someone must have
 			// customered something for at least 1 day.
@@ -207,7 +201,6 @@ public class RestaurantController3 {
 					model.addAttribute("today", thisDaysMenus);
 					model.addAttribute("other", this.otherDayNamesButThisOne(day));
 					model.addAttribute("price", this.price(thisDaysMenus));
-					System.out.println("I AM HERE INSIDE IF IF IF");
 					return "/menualreadyordered"; // send him to this page and
 					// tell him that you have
 					// already placed customer for
@@ -218,8 +211,6 @@ public class RestaurantController3 {
 					List<Menu> thisDaysMenusForShow = this.menuService.getMenu(day);
 					model.addAttribute("today", thisDaysMenusForShow );
 					model.addAttribute("other", this.otherDayNamesButThisOne(day));
-					System.out.println("I AM HERE INSIDE IF IF ELSE");
-
 					return "/menu";	
 
 				}
@@ -283,8 +274,6 @@ public class RestaurantController3 {
 	@RequestMapping(value = "/ordersubmitted", method = RequestMethod.POST)
 	public String done(@ModelAttribute(value = "customer") Customer customer, HttpServletRequest request, Model model) {
 
-		System.err.println("inside order submitted, Customer is: " + customer);
-		
 		String signUp = request.getParameter("signup");
 		if (signUp != null) { // It means that he checked the signup button and filled his userid and password
 
@@ -314,7 +303,6 @@ public class RestaurantController3 {
 				sm.Send(customer);
 				model.addAttribute("alreadySignedUp", true);
 			} else { //This meets the 1st condition. He wants to place Order without signing up. He has no username (userid).
-				System.err.println("INSIDE /ORDERSUBMITTED IF ELSE IF ELSE");
 				this.menuService.saveSingleOrder(new SingleOrder(this.sessionID(), customer.getFullname(), customer.getMenus())); 
 				model.addAttribute("cartsize", this.menuService.getCartSize(this.sessionID()));
 			}
@@ -383,14 +371,13 @@ public class RestaurantController3 {
 
 	@RequestMapping(value = "/signin", method = RequestMethod.GET)
 	public String signIn(Model model, HttpSession session) {
-		System.out.println("model.asMap is: " + model.asMap().toString());
 		return "/signin";
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public String signIn(@ModelAttribute(value = "customer") Customer customer, Model model, RedirectAttributes ra) {
 
-		System.out.println("model.asMap is: " + model.asMap().toString());
+		
 		Customer o = new Customer(customer);
 		String userid = o.getUserid();
 		String password = o.getPassword();
@@ -417,8 +404,6 @@ public class RestaurantController3 {
 
 	@RequestMapping(value = "/youraccount", method = {RequestMethod.GET, RequestMethod.POST})
 	public String yourAccountGet(@ModelAttribute(value = "customer") Customer customer, Model model, RedirectAttributes ra) {
-
-		System.err.println("INSIDE /YOURACCOUNT, Customer IS: " + customer);
 
 		Customer o = new Customer(customer);
 		String userid = o.getUserid();

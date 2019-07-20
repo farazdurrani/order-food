@@ -62,7 +62,6 @@ public class DefaultOrderRepository implements OrderRepository
 			query.executeUpdate();
 			Query query2 = sessionFactory.getCurrentSession().createSQLQuery("delete from singleorders where single_order_id = " + id);	
 			int rows = query2.executeUpdate();
-			System.err.println(rows + " ROWS of SingleOrder DELETED!");
 	
 		}
 
@@ -74,7 +73,6 @@ public class DefaultOrderRepository implements OrderRepository
 		Query hquery = sessionFactory.getCurrentSession().createQuery("FROM SingleOrder WHERE single_order_id = :single_order_id");
 		hquery.setLong("single_order_id", id);
 		List<SingleOrder> SingleOrderList = (List<SingleOrder>) hquery.list();
-			System.err.println("SingleOrderList is: " + SingleOrderList);
 			ArrayList<Menu> m = new ArrayList<Menu>();
 			for(int i = 0; i  < SingleOrderList.size(); i++){
 				m.addAll(SingleOrderList.get(i).getMenus());
@@ -127,24 +125,6 @@ public class DefaultOrderRepository implements OrderRepository
 				}
 			}			
 			return personName;
-		
-		
-		
-		/*Query hquery = sessionFactory.getCurrentSession().createQuery("FROM SingleOrder WHERE single_order_id = :single_order_id");
-		hquery.setLong("single_order_id", id);
-		List<SingleOrder> SingleOrderList = (List<SingleOrder>) hquery.list();
-			System.err.println("SingleOrderList is: " + SingleOrderList);
-			String personName = "";
-			for (int i = 0; i < SingleOrderList.size(); i++) {
-				if(SingleOrderList.get(i).getSingle_order_id() == id){      //THIS CHECK IS WRONG. AM I NOT ALREADY PULLING RECORDS ONLY OF THAT PARTICULAR SINGLE_ORDER_ID? IMPROVE IT SOME OTHER
-					for (int j = 0; j < SingleOrderList.get(i).getMenus().size(); j++) {
-						if (SingleOrderList.get(i).getMenus().get(j).getDay().contentEquals(today)){
-							personName = SingleOrderList.get(i).getPersonName();
-						}
-					}
-				}
-			}			
-			return personName;*/
 	}
 
 	@SuppressWarnings("unchecked")
@@ -194,24 +174,6 @@ public class DefaultOrderRepository implements OrderRepository
 				}
 			}			
 			return personName;
-		
-		
-		
-		/*Query hquery = sessionFactory.getCurrentSession().createQuery("FROM SingleOrder WHERE single_order_id = :single_order_id");
-		hquery.setLong("single_order_id", id);
-		List<SingleOrder> SingleOrderList = (List<SingleOrder>) hquery.list();
-			System.err.println("SingleOrderList is: " + SingleOrderList);
-			String personName = "";
-			for (int i = 0; i < SingleOrderList.size(); i++) {
-				if(SingleOrderList.get(i).getSingle_order_id() == id){      //THIS CHECK IS WRONG. AM I NOT ALREADY PULLING RECORDS ONLY OF THAT PARTICULAR SINGLE_ORDER_ID? IMPROVE IT SOME OTHER
-					for (int j = 0; j < SingleOrderList.get(i).getMenus().size(); j++) {
-						if (SingleOrderList.get(i).getMenus().get(j).getDay().contentEquals(today)){
-							personName = SingleOrderList.get(i).getPersonName();
-						}
-					}
-				}
-			}			
-			return personName;*/
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -222,8 +184,6 @@ public class DefaultOrderRepository implements OrderRepository
 		hquery.setString("userid", userid);
 		
 		ArrayList<Customer> customer = (ArrayList<Customer>)hquery.list();
-		
-		System.err.println("inside getAllMenusOfThisPerson(String userid), customer is: " + customer);
 		
 		ArrayList<Menu> m = new ArrayList<Menu>();
 		for (int i = 0; i < customer.size(); i++) {
@@ -253,7 +213,6 @@ public class DefaultOrderRepository implements OrderRepository
 		hquery.setString("password", password);
 		
 		ArrayList<Customer> customer = (ArrayList<Customer>)hquery.list();
-		System.err.println("OK WHAT YOU GOT? " + customer);
 		Customer c = null;
 		if (customer != null && !customer.isEmpty()){
 		 c = customer.get(0);
@@ -287,7 +246,6 @@ public class DefaultOrderRepository implements OrderRepository
 		hquery.setBoolean("open", true);
 		
 		ArrayList<Customer> customer = (ArrayList<Customer>)hquery.list();
-		System.err.println("inside getOpenOrders(), Customer.menus.open is: " + customer);
 		
 		return customer;
 	}
@@ -314,7 +272,6 @@ public class DefaultOrderRepository implements OrderRepository
 		hquery.setBoolean("open", true);
 		
 		ArrayList<SingleOrder> singleorder = (ArrayList<SingleOrder>)hquery.list();
-		System.err.println("inside getOpenSingleOrders(), Customer.menus.open is: " + singleorder);
 		
 		return singleorder;
 	}
@@ -341,7 +298,6 @@ public class DefaultOrderRepository implements OrderRepository
 		hquery.setBoolean("open", false);
 		
 		ArrayList<SingleOrder> singleorder = (ArrayList<SingleOrder>)hquery.list();
-		System.err.println("inside getOpenOrders(), Customer.menus.open is: " + singleorder);
 		
 		return singleorder;
 	}
@@ -354,7 +310,6 @@ public class DefaultOrderRepository implements OrderRepository
 		hquery.setBoolean("open", false);
 		
 		ArrayList<Customer> customer = (ArrayList<Customer>)hquery.list();
-		System.err.println("inside getOpenOrders(), Customer.menus.open is: " + customer);
 		
 		return customer;
 	}

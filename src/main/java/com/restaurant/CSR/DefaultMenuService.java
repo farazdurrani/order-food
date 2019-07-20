@@ -73,12 +73,6 @@ public class DefaultMenuService implements MenuService
 	public List<Menu> getTodaysMenu() {
 		
 		ArrayList<Menu> m = (ArrayList<Menu>) this.getMenu(today());
-		/*System.err.println("Inside getTodaysMenu()");
-		for(int i = 0 ; i < m.size(); i++){
-			m.get(i).setOrderDate(new Date());
-			System.err.println(m.get(i));
-		}
-		System.err.println("==========================");*/
 		return m;
 
 	}
@@ -125,7 +119,6 @@ public class DefaultMenuService implements MenuService
 	@Override
 	public long saveUser(Customer customer) {
 		long id = this.orderRepository.saveUser(customer);
-		System.err.println("THIS USER IS SAVED WITH ID: " + id);
 		return id;
 		
 	}
@@ -174,8 +167,6 @@ public class DefaultMenuService implements MenuService
 		 for (int i = 0; i < m.size(); i++) {
 				s.add(m.get(i).getOrderDate());
 			}
-		System.err.println("Set<Date> s has: " + s); 
-		
  		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
  		String testDateString = df.format(d);
  		Date d2 = null;
@@ -217,38 +208,22 @@ public class DefaultMenuService implements MenuService
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
- 		System.err.println("Inside getMenuOfThisPersonFrom(String day, String userid), d2 is: " + d2);
  		for (int i = 0; i < m.size(); i++) {
 			if(m.get(i).getOrderDate().compareTo(d2)==0){
-				System.err.println("found it! " + m.get(i).getOrderDate() );
 				n.add(m.get(i));
 			}
 		}
 		
 		
 		return n;
-		/*List<Menu> m = new ArrayList<Menu>();
-		List<Menu> n = new ArrayList<Menu>();
-		m = this.orderRepository.getAllMenusOfThisPerson(userid);
-		
-		
-		for (int i = 0; i < m.size(); i++) {
-			if(m.get(i).getDay().equalsIgnoreCase(day)){
-				n.add(m.get(i));
-			}
-		}
-		return n;*/
 	}
 
 
 	@Override
 	public List<Menu> getMenuOfThisPersonFrom(String day, String userid) {
-		System.err.println("I, getMenuOfThisPersonFrom(String day, String userid), am called");
-		System.err.println("################################################################");
 		final int DAYS_IN_WEEK = 7;
 		
 		List<Menu> m = this.orderRepository.getAllMenusOfThisPerson(userid); //this list has all the orders of this person with this unique userid (email)
-		System.err.println("this.orderRepository.getAllMenusOfThisPerson(userid) gets me: " + m);
 		
 		List<Menu> n = new ArrayList<Menu>();	// this list has all the orders of that specific day of his person with this unique userid (email)
 		
@@ -258,8 +233,6 @@ public class DefaultMenuService implements MenuService
 			}
 		}
 		
-		System.err.println("This list has all the menus of this " + day + ":" + n);
-		
 		ArrayList<Date> weeksDates = new ArrayList<Date>(); //this list has the dates of all the next 7 days
     	for (int j = 0; j < DAYS_IN_WEEK; j++) {
     		Calendar cal =  Calendar.getInstance();
@@ -267,8 +240,6 @@ public class DefaultMenuService implements MenuService
     		Date d = cal.getTime();  
     		weeksDates.add(d);      		
 		}
-    	
-    	System.err.println("Next 7 dats Dates are " + weeksDates);
     	
     	Date actualDay = null;		//This date variable will hold the actual date of the day that has been passed thru the method parameters
     	
@@ -281,8 +252,6 @@ public class DefaultMenuService implements MenuService
     		
 		}	
     	
-    	System.err.println("This is the date we looking for " + actualDay);
-    	
  		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
  		String testDateString = df.format(actualDay);   //converted that date to string in this specific pattern because the dates coming in from DB are in this pattern
  		Date d2 = null;                                 //that actual date is in this date d2 variable now in a pattern that the incoming menus' dates will be in
@@ -292,8 +261,6 @@ public class DefaultMenuService implements MenuService
 			e.printStackTrace();
 		}
  		
- 		System.err.println("Same date is a different pattern " + d2);
- 		
  		List<Menu> o = new ArrayList<Menu>();           //this list holds the actual menus that are needed to be displayed
  		
  		for (int i = 0; i < n.size(); i++) {
@@ -302,10 +269,6 @@ public class DefaultMenuService implements MenuService
 			}
 		}
  		
- 		System.err.println("This list has all the orders of this " + d2 + " date" + o);
- 		
- 		System.err.println("################################################################");
-		
 		return o;
 		
 	}
@@ -318,7 +281,6 @@ public class DefaultMenuService implements MenuService
 		 for (int i = 0; i < m.size(); i++) {
 				s.add(m.get(i).getOrderDate());
 			}
-		System.err.println("Set<Date> s has: " + s); 
 		Calendar cal =  Calendar.getInstance();
  		Date d = cal.getTime(); 
  		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -414,23 +376,12 @@ public class DefaultMenuService implements MenuService
 		}
  		for (int i = 0; i < m.size(); i++) {
 			if(m.get(i).getOrderDate().compareTo(d2)==0){
-				System.err.println("found it! " + m.get(i).getOrderDate() );
 				n.add(m.get(i));
 			}
 		}
 		
 		
 		return n;
-	/*	List<Menu> m = new ArrayList<Menu>();
-		List<Menu> n = new ArrayList<Menu>();
-		m = this.orderRepository.getAllMenusOfThisPersonFromSaveSingleOrdersDatabase(id);
-		 System.err.println("MOFO DID YOU TRY TO CALL ME FROM List<Menu> getMenuOfThisPersonWhoIsNotLoggedInFrom ");
-		for (int i = 0; i < m.size(); i++) {
-			if(m.get(i).getDay().equalsIgnoreCase(day))
-				n.add(m.get(i));
-		}
-		
-		return n;*/
 	}
 	@Override
 	public List<SingleOrder> getRecordOfThisPersonWhoIsNotLoggedInFrom(long id) {
@@ -446,7 +397,6 @@ public class DefaultMenuService implements MenuService
 		 for (int i = 0; i < m.size(); i++) {
 				s.add(m.get(i).getOrderDate());
 			}
-		System.err.println("Set<Date> s has: " + s); 
 		Calendar cal =  Calendar.getInstance();
  		Date d = cal.getTime(); 
  		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -462,19 +412,6 @@ public class DefaultMenuService implements MenuService
 		 }		
 				
 		return false;
-		
-		
-		
-		/*Set<String> s = new HashSet<String>();
-		List<Menu> m = new ArrayList<Menu>();
-		 m = this.orderRepository.getAllMenusOfThisPersonFromSaveSingleOrdersDatabase(id);
-		 System.err.println("MOFO DID YOU TRY TO CALL ME FROM boolean isThisPersonTryingToCheckTheMenuForTodayAndHeHasAlreadyOrdered_HeIsNotLoggedIn ");
-		 for (int i = 0; i < m.size(); i++) {
-				s.add(m.get(i).getDay());
-			}
-		 if(s.contains(today()))
-				return true;
-		return false;*/
 	}
 
 	@Override
@@ -506,7 +443,6 @@ public class DefaultMenuService implements MenuService
 	@Override
 	public boolean isThisPersonTryingToCheckTheMenuForWhichHeHasAlreadyOrdered_HeIsNotLoggedIn(String day, long id) {
 		
-		System.err.println("isThisPersonTryingToCheckTheMenuForWhichHeHasAlreadyOrdered_HeIsNotLoggedIn(String day, long id) is at your service where you expected");
 		final int DAYS_IN_WEEK= 7;
 		ArrayList<Date> weeksDates = new ArrayList<Date>();
     	for (int j = 0; j < DAYS_IN_WEEK; j++) {
@@ -529,7 +465,6 @@ public class DefaultMenuService implements MenuService
 		 for (int i = 0; i < m.size(); i++) {
 				s.add(m.get(i).getOrderDate());
 			}
-		System.err.println("Set<Date> s has: " + s); 
 		
  		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
  		String testDateString = df.format(d);
@@ -588,10 +523,6 @@ public class DefaultMenuService implements MenuService
 		 for (int i = 0; i < m.size(); i++) {
 				s.add(m.get(i).getDay());
 			}
-		 System.err.println("getCartSize() is : s" + "\n" +s.size());
 		 return s.size();
 	}
-
-
-   
 }

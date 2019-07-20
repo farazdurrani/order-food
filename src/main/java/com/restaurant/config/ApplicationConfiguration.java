@@ -5,11 +5,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -32,23 +33,39 @@ import com.restaurant.CSR.ENTITY.Order;
 import com.restaurant.CSR.ENTITY.SingleOrder;
 import com.restaurant.CSR.ENTITY.User;
 
+import ch.vorburger.exec.ManagedProcessException;
+import ch.vorburger.mariadb4j.DBConfigurationBuilder;
+import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
+
 @Configuration
 public class ApplicationConfiguration {
-	@Bean(name = "dataSource")
-	public DataSource getDataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-		String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-		String name = "demo";
-		String url = "jdbc:mysql://" + host + ":" + port + "/" + name;
-		// dataSource.setUrl("jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/demo");
-		dataSource.setUrl(url);
-		dataSource.setUsername("adminFnhZzhv");
-		dataSource.setPassword("l1uIxPhgrE4u");
 
-		return dataSource;
+	@Bean
+	public MariaDB4jSpringService mariaDB4jSpringService() throws ManagedProcessException {
+		MariaDB4jSpringService maria = new MariaDB4jSpringService();
+		return maria;
 	}
+
+	@Bean
+	public DataSource dataSource(MariaDB4jSpringService mariaDB4jSpringService,
+                          @Value("${app.mariaDB4j.databaseName}") String databaseName,
+                          @Value("${spring.datasource.username}") String datasourceUsername,
+                          @Value("${spring.datasource.password}") String datasourcePassword,
+                          @Value("${spring.datasource.driver-class-name}") String datasourceDriver) throws ManagedProcessException {
+        //Create our database with default root user and no password
+        mariaDB4jSpringService.getDB().createDB(databaseName);
+        mariaDB4jSpringService.getDB().source("schema.sql");
+
+        DBConfigurationBuilder config = mariaDB4jSpringService.getConfiguration();
+
+        return DataSourceBuilder
+                .create()
+                .username(datasourceUsername)
+                .password(datasourcePassword)
+                .url(config.getURL(databaseName))
+                .driverClassName(datasourceDriver)
+                .build();
+    }
 
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();

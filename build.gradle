@@ -24,6 +24,9 @@ dependencies {
 	compile group: 'org.springframework', name: 'spring-support', version: '2.0.6'
 	compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
 	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.3.6.Final'
-	
-	
+	compile group: 'ch.vorburger.mariaDB4j', name: 'mariaDB4j', version: '2.4.0'
+	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.2'
+	compile group: 'javax.servlet.jsp.jstl', name: 'javax.servlet.jsp.jstl-api', version: '1.2.1'
+	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.22'
+	compile group: 'jstl', name: 'jstl', version: '1.2'
 }
