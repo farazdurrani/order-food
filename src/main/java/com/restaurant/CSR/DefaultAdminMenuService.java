@@ -38,9 +38,9 @@ public class DefaultAdminMenuService implements AdminMenuService {
 
 
 	@Override
-	public Admin AdminAuthentication(String username, String password) {
+	public Admin authenticateAdmin(String username, String password) {
 		
-		return this.orderRepository.AdminAuthentication(username, password);
+		return this.orderRepository.authenticateAdmin(username, password);
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class SendMail {
 	
 	
 	
-	public void Send(Customer student){
+	public void sendEmail(Customer student){
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(student.getUserid());
 		email.setSubject("XYZ Restaurant Order Confirmation");

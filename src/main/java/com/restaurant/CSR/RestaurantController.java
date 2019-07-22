@@ -300,7 +300,7 @@ public class RestaurantController {
 
 			if (customer.getUserid() != null && !customer.getUserid().isEmpty()) { // this meets 2nd condition. He has a userid (he logged in or signed up) //if (!customer.getUserid().isEmpty())
 				this.menuService.saveUser(customer);
-				sm.Send(customer);
+				sm.sendEmail(customer);
 				model.addAttribute("alreadySignedUp", true);
 			} else { //This meets the 1st condition. He wants to place Order without signing up. He has no username (userid).
 				this.menuService.saveSingleOrder(new SingleOrder(this.sessionID(), customer.getFullname(), customer.getMenus())); 

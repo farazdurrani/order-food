@@ -7,7 +7,7 @@ import com.restaurant.CSR.ENTITY.Customer;
 import com.restaurant.CSR.ENTITY.SingleOrder;
 
 public interface AdminMenuService {
-	Admin AdminAuthentication(String username, String password);
+	Admin authenticateAdmin(String username, String password);
 	List<Customer> getOpenOrders();
 	Customer getOpenOrder(int id);
 	void setThisOrderClosed(long parameter);

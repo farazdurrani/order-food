@@ -48,7 +48,7 @@ public class ApplicationConfiguration {
 
 	@Bean
 	public DataSource dataSource(MariaDB4jSpringService mariaDB4jSpringService,
-                          @Value("${app.mariaDB4j.databaseName}") String databaseName,
+                          @Value("${mariaDB4j.databaseName}") String databaseName,
                           @Value("${spring.datasource.username}") String datasourceUsername,
                           @Value("${spring.datasource.password}") String datasourcePassword,
                           @Value("${spring.datasource.driver-class-name}") String datasourceDriver) throws ManagedProcessException {
@@ -69,7 +69,7 @@ public class ApplicationConfiguration {
 
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();
-		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.show_sql", "false");
 		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		return properties;
 	}
@@ -104,19 +104,20 @@ public class ApplicationConfiguration {
 	}
 
 	@Bean
-	public JavaMailSenderImpl javaMailSenderImpl() {
+	public JavaMailSenderImpl javaMailSenderImpl(@Value("${gmail.username}") String username, @Value("${gmail.password}") String password) {
+		
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 		// Set gmail email id
-		mailSender.setUsername("studentmanagementportal@gmail.com");
+		mailSender.setUsername(username);
 		// Set gmail email password
-		mailSender.setPassword("bilalbilal");
+		mailSender.setPassword(password);
 		Properties prop = mailSender.getJavaMailProperties();
 		prop.put("mail.transport.protocol", "smtp");
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.starttls.enable", "true");
-		prop.put("mail.debug", "true");
+		prop.put("mail.debug", "false");
 		return mailSender;
 	}
 

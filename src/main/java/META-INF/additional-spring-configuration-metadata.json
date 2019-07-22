@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "mariaDB4j.dataDir",
+    "type": "java.lang.String",
+    "description": "A description for 'mariaDB4j.dataDir'"
+  },
+  {
+    "name": "mariaDB4j.port",
+    "type": "java.lang.String",
+    "description": "A description for 'mariaDB4j.port'"
+  },
+  {
+    "name": "mariaDB4j.databaseName",
+    "type": "java.lang.String",
+    "description": "A description for 'app.mariaDB4j.databaseName'"
+  }
+]}

@@ -9,7 +9,12 @@ CREATE TABLE `admin` (
  `username` varchar(255) DEFAULT NULL,
  `password` varchar(255) DEFAULT NULL,
  PRIMARY KEY (`admin_id`)
-); 
+);
+
+insert into admin
+(username, password)
+values
+('admin', 'admin'); 
 
 CREATE TABLE `customer` (
  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -59,6 +64,31 @@ CREATE TABLE `menusforshow` (
  `price` int(11) NOT NULL,
  PRIMARY KEY (`menu_id`)
 );
+
+insert into menusforshow
+(day, name, price)
+values
+('Monday', 'Aloo', 5),
+('Monday', 'Biriyani', 6),
+('Monday', 'Cholay', 4),
+('Tuesday', 'Dahi bhallay', 3),
+('Tuesday', 'Dahi', 7),
+('Tuesday', 'Garam Cholay', 6),
+('Wednesday', 'Kabab', 4),
+('Wednesday', 'kababs', 6),
+('Wednesday', 'Kalay Cholay', 8),
+('Thursday', 'Nihari', 9),
+('Thursday', 'Palak', 5),
+('Thursday', 'Safaid Aloo', 5),
+('Friday', 'Thanday Cholay', 6),
+('Friday', 'Aloo', 5),
+('Friday', 'Biriyani', 6),
+('Saturday', 'Cholay', 4),
+('Saturday', 'Palak', 5),
+('Saturday', 'Nihari', 9),
+('Sunday', 'Safaid Aloo', 5),
+('Sunday', 'Garam Cholay', 6),
+('Sunday', 'Dahi bhallay', 3);
 
 CREATE TABLE `singleorder_menu` (
  `useless_id` int(11) NOT NULL,

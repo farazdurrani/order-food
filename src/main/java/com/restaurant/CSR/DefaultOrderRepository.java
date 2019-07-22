@@ -228,7 +228,7 @@ public class DefaultOrderRepository implements OrderRepository
 	
 	@Override
 	@Transactional
-	public Admin AdminAuthentication(String username, String password) {
+	public Admin authenticateAdmin(String username, String password) {
 		Query hquery = sessionFactory.getCurrentSession().createQuery("from Admin where password = :password and username = :username"); 
 		hquery.setString("username", username);
 		hquery.setParameter("password", password);

@@ -41,7 +41,7 @@ public class AdministratorController {
 	@RequestMapping(value = {"/signin"}, method = RequestMethod.POST)
 	public ModelAndView enteredCredentials(Admin admin) {
 		
-		Admin a = this.adminMenuService.AdminAuthentication(admin.getUsername(), admin.getPassword());
+		Admin a = this.adminMenuService.authenticateAdmin(admin.getUsername(), admin.getPassword());
 		
 
 		if (a != null) {	

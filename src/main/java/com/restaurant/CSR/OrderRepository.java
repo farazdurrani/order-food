@@ -24,7 +24,7 @@ public interface OrderRepository
 	/*
 	 * THESE METHODS below belong to Administrator
 	 */
-	Admin AdminAuthentication(String username, String password);
+	Admin authenticateAdmin(String username, String password);
 	List<Customer> getOpenOrders();
 	void setThisOrderClose(long id);
 	List<SingleOrder> getOpenSingleOrders();
