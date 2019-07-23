@@ -8,19 +8,19 @@ This application has a responsive and mobile first front-end using Bootstrap lib
 
 User Actions:
 
-A user can order food on this web application (this application doesn't accept online payment as of yet).
+1. A user can order food on this web application (this application doesn't accept online payment as of yet).
 
-A user can sign up to keep track of all the orders he/she has placed. User can login and logout as well. (This application doesn't use Spring Security yet).
+2. A user can sign up to keep track of all the orders he/she has placed. User can login and logout as well. (This application doesn't use Spring Security yet).
 
-A user can order food with or without signing up for an account.
+3. A user can order food with or without signing up for an account.
 
-A user is sent an email when he/she creates an account, and when places an order. Admin also recieved an email. Application makes use of JavaMail API and Apache Velocity for email templates. 
+4. A user is sent an email when he/she creates an account, and when places an order. Admin also recieved an email. Application makes use of JavaMail API and Apache Velocity for email templates. 
 
-This application keeps track of a session through [@SessionAttributes](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/SessionAttributes.html) and JSESSION ID as this application is deployed on a single container so above technique works. 
+5. This application keeps track of a session through [@SessionAttributes](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/SessionAttributes.html) and JSESSION ID as this application is deployed on a single container so above technique works. 
 
 Admin actions:
 
-Admin can sign in at https://restaurant-application-12.herokuapp.com/a to keep track of orders and to close and complete orders. 
+1. Admin can sign in at https://restaurant-application-12.herokuapp.com/a to keep track of orders and to close and complete orders. 
 
 All the config parameters are passed as part of env variables.
 
