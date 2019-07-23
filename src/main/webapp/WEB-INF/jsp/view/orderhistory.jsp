@@ -102,7 +102,7 @@ body {
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menu.price}</td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="popover"
 										class="btn btn-info btn-xs" rel="popover"
-										data-img="images/${menu.name}.jpg">${menu.name}</a></td>
+										data-img="/images/${menu.name}.jpg">${menu.name}</a></td>
 								</tr>
 
 							</c:forEach>

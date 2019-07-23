@@ -247,8 +247,8 @@ body {
 		
 
 <div class="col-sm-2">	
-<a href="http://stackoverflow.com/users/4828463/faraz-durrani">
-<img src="http://stackoverflow.com/users/flair/4828463.png?theme=dark" width="208" height="58" alt="profile for Faraz Durrani at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Faraz Durrani at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+<a href="https://stackoverflow.com/users/4828463/faraz-durrani">
+<img src="https://stackoverflow.com/users/flair/4828463.png?theme=dark" width="208" height="58" alt="profile for Faraz Durrani at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Faraz Durrani at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
 </a>
 </div>	<!-- END OF COL-XS-4 -->
 		<script>
