@@ -61,8 +61,7 @@ public class DefaultOrderRepository implements OrderRepository
 			Query query = sessionFactory.getCurrentSession().createSQLQuery("delete from menus where single_order_id = " + id);		
 			query.executeUpdate();
 			Query query2 = sessionFactory.getCurrentSession().createSQLQuery("delete from singleorders where single_order_id = " + id);	
-			int rows = query2.executeUpdate();
-	
+			query2.executeUpdate();
 		}
 
 	@SuppressWarnings("unchecked")

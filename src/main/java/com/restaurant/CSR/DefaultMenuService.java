@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -296,16 +295,6 @@ public class DefaultMenuService implements MenuService
 		 }		
 				
 		return false;
-		
-		/*Set<String> s = new HashSet<String>();
-		List<Menu> m = new ArrayList<Menu>();
-		 m = this.orderRepository.getAllMenusOfThisPerson(userid);
-		 for (int i = 0; i < m.size(); i++) {
-				s.add(m.get(i).getDay());
-			}
-		 if(s.contains(today()))
-				return true;
-		return false;*/
 	}
 
 	@Override
