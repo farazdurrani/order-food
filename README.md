@@ -2,6 +2,8 @@
 
 This application is a rewrite of [Demo Restaurant Application](https://github.com/farazdurrani/demo-restaurant-webapplication). The difference is that former application used MySQL database to persist data. And it was hosted on Openshift V2. And it was a Spring MVC application deployed on Tomcat 8. This application is a Spring boot application that uses embedded tomcat and embedded MariaDB. It is hosted on Heroku. 
 
+Original application was written as part of a portfolio build up to land a job in 2015.
+
 This application has a responsive and mobile first front-end using Bootstrap library. It uses JSPs for server side rendering. On the back end, it uses Spring MVC, Hibernate as a JPA implementation, and embedded MariaDB to persist data.
 
 User Actions:
