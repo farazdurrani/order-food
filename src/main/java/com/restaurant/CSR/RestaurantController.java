@@ -69,11 +69,6 @@ public class RestaurantController {
 		binder.registerCustomEditor(Menu.class, new MenuTypeEditor());
 
 	}
-	
-	@RequestMapping(value = "snoop", method = RequestMethod.GET)
-	public String snoop() {
-		return "/snoop";
-	}
 
 	@RequestMapping(value = { "", "list", "main", " " }, method = RequestMethod.GET)
 	public String listMenus(Map<String, Object> model) {
