@@ -14,7 +14,7 @@ User Actions:
 
 3. A user can order food with or without signing up for an account.
 
-4. A user is sent an email when he/she creates an account, and when places an order. Admin also recieved an email. Application makes use of JavaMail API and Apache Velocity for email templates. 
+4. A user is sent an email an account is made, and when an order is created. Admin also recieves an email. Application makes use of JavaMail API to send an email and Apache Velocity for email templates. 
 
 5. This application keeps track of a session through [@SessionAttributes](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/SessionAttributes.html) and JSESSION ID as this application is deployed on a single container so above technique works. 
 
